@@ -6,10 +6,22 @@
     <h1 class="title" v-html="title"></h1>
     <div class="bg-image" :style="bgStyle" ref="bgImage">
     </div>
+    <scroll :data="songs">
+      <div class="song-list-wrapper">
+        <song-list :songs="songs"></song-list>
+      </div>
+      <div v-show="!songs.length" class="loading-container">
+        <loading></loading>
+      </div>
+    </scroll>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+  import Scroll from 'base/scroll/scroll'
+  import Loading from 'base/loading/loading'
+  import SongList from 'base/song-list/song-list'
+
   export default {
     props: {
       bgImage: {
@@ -25,10 +37,20 @@
         default: ''
       }
     },
+    methods: {
+      back() {
+        this.$router.back()
+      }
+    },
     computed: {
       bgStyle() {
         return `background-image:url(${this.bgImage})`
       }
+    },
+    components: {
+      Scroll,
+      SongList,
+      Loading
     }
   }
 </script>
